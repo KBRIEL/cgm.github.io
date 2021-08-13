@@ -7,7 +7,7 @@ var cost= document.createElement('h3');
 var iCosto= document.createElement('input');
 var btnCarga=document.createElement('button');
 var btnGame=document.createElement('button');
-var T= document.createElement('h1');
+
 
 h1T.innerHTML="Cargar Producto entro";
 prod.innerHTML="producto";
