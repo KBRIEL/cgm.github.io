@@ -6,16 +6,24 @@ var iProducto= document.createElement('input');
 var cost= document.createElement('h3');
 var iCosto= document.createElement('input');
 var btnCarga=document.createElement('button');
+var btnGame=document.createElement('button');
+var T= document.createElement('h1');
 
-h1T.innerHTML="Cargar Producto";
+h1T.innerHTML="Cargar Producto entro";
 prod.innerHTML="producto";
 cost.innerHTML='costo';
 btnCarga.innerHTML='Cargar';
+btnGame.innerHTML='Play Game';
 
 
 
+const goToGame = () => window.location="Game.html";
 
- var hp = document.getElementById('hp');
+
+btnGame.addEventListener('click',goToGame);
+
+
+    var hp = document.getElementById('hp');
   
     var h1 = document.createElement("h1");
     h1.innerHTML = 'Solo para usuarios';
@@ -26,14 +34,15 @@ btnCarga.innerHTML='Cargar';
 
 const startHome=()=>{
     if(localStorage.user=='cris@gmail.com'){
+
         hp.appendChild(app);
-       
+       hp.appendChild(btnGame);
         hp.appendChild(h1T);
         hp.appendChild(prod);
         hp.appendChild(iProducto);
         hp.appendChild(cost);
         hp.appendChild(iCosto);
-        hp.appendChild(btnCarga);
+        hp.appendChild(btnCarga); 
     }else{
         hp.appendChild(app);
     }
@@ -76,3 +85,79 @@ function checkTime(i) {
     }
     return i;
 }
+
+
+//--------base de datos
+
+const {Pool, Client} = require('pg');
+
+const config ={
+user: 'postgres',
+host: 'localhost',
+password: 'hermes2004',
+database: 'dekorina'
+
+};
+
+const pool = new Pool(config);
+
+const getProduct= async ()=>{
+    try{
+         const res = await pool.query('select * from producto');
+        console.log(res) ;
+        pool.end();
+
+    }catch(error){
+        console.log(e);
+    }
+
+ 
+}
+
+const insertDate = async()=>{
+    const text= 'INSERT INTO  producto(producto, costo) VALUES($1,$2)';
+    const values =['vinilo', 1200];
+
+    try{
+        const res = await pool.query(text, values);
+       console.log(res) ;
+       pool.end();
+
+   }catch(error){
+       console.log(e);
+   }
+
+}
+
+const deleteDate = async()=>{
+    const text= 'DELETE FROM  producto WHERE producto = $1';
+    const values =['vinilo'];
+
+    try{
+        const res = await pool.query(text, values);
+       console.log(res) ;
+       pool.end();
+
+   }catch(error){
+       console.log(e);
+   }
+
+}
+
+const upDate = async()=>{
+    const text= 'UPDATE  producto SET costo = $1 where costo = $2';
+    const values =[1200, 1300];
+
+    try{
+        const res = await pool.query(text, values);
+       console.log(res) ;
+       pool.end();
+
+   }catch(error){
+       console.log(e);
+   }
+
+}
+
+insertDate();
+
